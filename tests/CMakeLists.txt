@@ -1,11 +1,10 @@
 
 add_executable(
-  test
+  test_exmaple
   test.cc
 )
 target_link_libraries(
-  test
+  test_exmaple
   GTest::gtest_main
 )
-
-gtest_discover_tests(hello_test)
+gtest_discover_tests(test_exmaple)
