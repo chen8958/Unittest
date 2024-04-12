@@ -25,6 +25,7 @@
                     "value": "Something something"
                 }
             ],
+            "console":"integratedTerminal",
             "externalConsole": true
         },
         {
@@ -48,7 +49,7 @@
                     "value": "Something something"
                 }
             ],
-            "externalConsole": true,
+            "console":"integratedTerminal",
             "MIMode": "gdb",
             "setupCommands": [
                 {

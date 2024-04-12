@@ -1,0 +1,72 @@
+#include <vector>
+
+class Test{
+    
+    int function(std::vector<std::vector<int>> input){
+        std::unordered_map<int,std::list> nodemap;
+        std::vector<std::vector<int>> dequeue_list;
+        int min = 0;
+        for(auto vec : input){
+            if(nodemap[vec[0]].find() == nodemap.end()){
+                nodemap[vec[0]] = std::list<int>();
+            }
+            nodemap[vec[0]].enqueue(vec[1]);
+
+            if(nodemap[vec[1]].find() == nodemap.end()){
+                nodemap[vec[1]] = std::list<int>();
+            }
+            nodemap[vec[1]].enqueue(vec[0]);
+
+        }
+        while(nodemap.size() == 1 && nodemap.size() == 2){
+            for(auto pair : nodemap){
+                if(pair.second.size() == 1){
+                    dequeue_list.equeue(std::vector<int>())
+                    nodemap.remove(pair);
+                    // another
+                    freqmap[another]--;
+                }
+                min ++;
+            }
+        }
+        
+        
+    }
+
+};
+
+
+
+conslusion
+慘不忍睹，參考code style
+注意二維的struct
+
+熟悉container
+
+list remove
+unordered_map remove
+
+的full empty enqueue的做法
+製作cheatsheet
+
+注意dynamic 迴圈問題
+前值會影響後值
+
+
+
+
+Input constraints:
+1 < input.length < 50
+input[any].length == 2 
+0 < input[any] < int_MAX
+
+
+Test case
+[1,2][2,3][3,4][4,5] naiive
+[1,2][1,3][1,4][1,5]
+input put order?
+it must be connected each other
+
+
+Note field
+

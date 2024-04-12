@@ -17,6 +17,6 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -Wall -g")
 include(GoogleTest)
 enable_testing()
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/googletest/googletest/include)
-
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR})
 add_subdirectory(${PROJECT_SOURCE_DIR}/googletest)
 add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
