@@ -12,7 +12,7 @@ public:
     }
 };
 
-class LeetCodeTester : public testing::TestWithParam<tuple<bool, int, vector<vector<int>>>> {
+class LeetCodeTester : public testing::TestWithParam<tuple<int ,vector<vector<int>>, int, int>> {
  public:
   void SetUp() override {  
   }
@@ -32,17 +32,13 @@ INSTANTIATE_TEST_SUITE_P(TestInput1, LeetCodeTester,
                             //         )
                             //     )
                             testing::Values(
-                                // std::make_tuple(FALSE, 2, std::vector<std::vector<int>>{{0, 1}, {1, 0}}),
-                                // std::make_tuple(TRUE, 3, std::vector<std::vector<int>>{{0, 1}, {1, 2}}),
-                                // std::make_tuple(TRUE, 1, std::vector<std::vector<int>>{}),
-                                // std::make_tuple(FALSE, 5, std::vector<std::vector<int>>{{0, 1},{0, 2},{2, 3},{3, 4},{4, 2}}),
-                                // std::make_tuple(TRUE, 5, std::vector<std::vector<int>>{{0, 1},{0, 2},{2, 3},{3, 4},{1, 4}}),
-                                std::make_tuple(TRUE, 6, std::vector<std::vector<int>>{{0, 1},{0, 2},{2, 3},{3, 4},{3, 5},{5, 1}})
+
+                                std::make_tuple(3, std::vector<std::vector<int>>{{1,2,1},{2,3,2},{1,3,4}}, 3, 1)
                             )
                          );
-
+//vector<vector<int>>& times, int n, int k
 
 TEST_P( LeetCodeTester, TestInputPattern1) {
-  auto [input, n, output] = GetParam();
-  EXPECT_EQ(input, myTest::course_schdule(n, output));
+  auto [ans, times, n, k] = GetParam();
+  EXPECT_EQ(ans, myTest::networkDelayTime(times, n, k));
 }
