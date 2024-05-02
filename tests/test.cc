@@ -12,7 +12,7 @@ public:
     }
 };
 
-class LeetCodeTester : public testing::TestWithParam<tuple<int, vector<string>>> {
+class LeetCodeTester : public testing::TestWithParam<tuple<int, vector<vector<int>>>> {
  public:
   void SetUp() override {  
   }
@@ -32,16 +32,14 @@ INSTANTIATE_TEST_SUITE_P(TestInput1, LeetCodeTester,
                             //         )
                             //     )
                             testing::Values(
-                                std::make_tuple(2,vector<string>{" /","/ "}),
-                                std::make_tuple(1,vector<string>{" /","  "}),
-                                std::make_tuple(2,vector<string>{"\\ "," \\"}),
-                                std::make_tuple(5,vector<string>{"/\\","\\/"}),
-                                std::make_tuple(4,vector<string>{"//","\\\\"})
+                                std::make_tuple(0, vector<vector<int>>{{0,0},{1,1}}),
+                                std::make_tuple(3, vector<vector<int>>{{0,0},{0,1},{1,0},{1,1}}),
+                                std::make_tuple(3, vector<vector<int>>{{0,0},{0,2},{1,1},{2,0},{2,2}})
                             )
                          );
 //vector<vector<int>>& times, int n, int k
 
 TEST_P( LeetCodeTester, TestInputPattern1) {
   auto [ans, pattern] = GetParam();
-  EXPECT_EQ(ans, myTest::regionsBySlashes(pattern));
+  EXPECT_EQ(ans, myTest::removeStones(pattern));
 }

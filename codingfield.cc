@@ -1,120 +1,61 @@
 #include <vector>
-#include <list>
-#include <queue>
-#include <string>
+#include <numeric>
 using namespace std;
 
 namespace myTest{
-    typedef struct piece PIECE, *PIECE_PTR;
-    struct piece{
-        PIECE_PTR parent;
-        int rank = 0;
-        piece(){
-            parent = this;
-        }
-    };
-
-    typedef struct block BLOCK, *BLOCK_PTR;
-    struct block{
-        PIECE_PTR upper;
-        PIECE_PTR down;
-        PIECE_PTR left;
-        PIECE_PTR right;
-        // block(){
-        //     upper = new PIECE;
-        //     down = new PIECE;
-        //     left = new PIECE;
-        //     right = new PIECE;
-        // }
-        void init(){
-            upper = new PIECE;
-            down = new PIECE;
-            left = new PIECE;
-            right = new PIECE;
-        }
-    };
-
+    
     class DSU{
         private:
-            vector<vector<BLOCK>> matrix;
+            vector<int> parent;
+            vector<int> rank;
         public:
-            int unions;
-            DSU(int n):matrix(n, vector<BLOCK>(n)), unions(4*n*n){
-                for(int i=0; i < n; i++){
-                    for(int j=0; j < n; j++){
-                        matrix[i][j].init();
-                    }
-                }
-                for(int i=0; i < n; i++){
-                    for(int j=0; j < n; j++){
-                        if(i+1<n){
-                            unin_piece(matrix[i][j].down, matrix[i+1][j].upper);
-                        }
-                        if(j+1<n){
-                            unin_piece(matrix[i][j].right, matrix[i][j+1].left);
-                        }
-                    }
-                }
+            int sets;
+            DSU(int n):parent(n), rank(n,0), sets(n){
+                iota(parent.begin(), parent.end(), 0);
             }
-            PIECE_PTR find_parent(PIECE_PTR current_piece_ptr){
-                while(current_piece_ptr != current_piece_ptr->parent){
-                    current_piece_ptr = current_piece_ptr->parent;
+            int find_parent(int cur){
+                while(cur != parent[cur]){
+                    cur = parent[cur];
                 }
-                return current_piece_ptr;
+                return cur;
             }
-
-            bool unin_piece(PIECE_PTR x, PIECE_PTR y){
-                PIECE_PTR px = find_parent(x), py = find_parent(y);
+            bool set_union(int x, int y){
+                int px = find_parent(x), py = find_parent(y);
                 if(px == py){
                     return false;
                 }else{
-                    if(px->rank > py->rank){
-                        py->parent = px;
+                    if(rank[px] > rank[py]){
+                        parent[py] = px;
                     }else{
-                        px->parent = py;
-                        if(px->rank == py->rank) py->rank++;
+                        parent[px] = py;
+                        if(rank[px] == rank[py])rank[py]++;
                     }
-                    unions--;
-                    return true;
+                    sets--;
                 }
             }
-            void space(int i , int j){
-                unin_piece(matrix[i][j].down, matrix[i][j].upper);
-                unin_piece(matrix[i][j].down, matrix[i][j].left);
-                unin_piece(matrix[i][j].down, matrix[i][j].right);
-            }
-            // "/"
-            void back_slash(int i , int j){
-                unin_piece(matrix[i][j].down, matrix[i][j].right);
-                unin_piece(matrix[i][j].upper, matrix[i][j].left);
-            }
-            // "\"
-            void forward_slash(int i , int j){
-                unin_piece(matrix[i][j].down, matrix[i][j].left);
-                unin_piece(matrix[i][j].upper, matrix[i][j].right);
-            }
+
     };
 
+    int removeStones(vector<vector<int>>& stones) {
+        DSU myset(stones.size());
+        // x to node idx in stones
+        unordered_map<int, int> x_map;
+        unordered_map<int, int> y_map;
 
-    int regionsBySlashes(vector<string>& grid) {
-        DSU mymatrix(grid.size());
-        for(int i = 0; i < grid.size(); i++){
-            for(int j = 0; j < grid[i].size();j++){
-                char w = grid[i][j];
-                switch(w){
-                    case '/':
-                        mymatrix.back_slash(i,j);
-                        break;
-                    case ' ':
-                        mymatrix.space(i,j);
-                        break;
-                    default:
-                        mymatrix.forward_slash(i,j);
-                        break;
-                }
+        for(int i = 0; i < stones.size(); i++){
+            if(x_map.find(stones[i][0]) != x_map.end()){
+                myset.set_union(x_map.find(stones[i][0])->second, i);
+            }else{
+                x_map[stones[i][0]] = i;
+            }
+
+            if(y_map.find(stones[i][1]) != y_map.end()){
+                myset.set_union(y_map.find(stones[i][0])->second, i);
+            }else{
+                y_map[stones[i][1]] = i;
             }
         }
-        return mymatrix.unions;
+        return stones.size()-myset.sets;
     }
 }
 
