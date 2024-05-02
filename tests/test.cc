@@ -12,7 +12,7 @@ public:
     }
 };
 
-class LeetCodeTester : public testing::TestWithParam<tuple<int ,vector<vector<int>>, int, int>> {
+class LeetCodeTester : public testing::TestWithParam<tuple<int, vector<string>>> {
  public:
   void SetUp() override {  
   }
@@ -32,13 +32,16 @@ INSTANTIATE_TEST_SUITE_P(TestInput1, LeetCodeTester,
                             //         )
                             //     )
                             testing::Values(
-
-                                std::make_tuple(3, std::vector<std::vector<int>>{{1,2,1},{2,3,2},{1,3,4}}, 3, 1)
+                                std::make_tuple(2,vector<string>{" /","/ "}),
+                                std::make_tuple(1,vector<string>{" /","  "}),
+                                std::make_tuple(2,vector<string>{"\\ "," \\"}),
+                                std::make_tuple(5,vector<string>{"/\\","\\/"}),
+                                std::make_tuple(4,vector<string>{"//","\\\\"})
                             )
                          );
 //vector<vector<int>>& times, int n, int k
 
 TEST_P( LeetCodeTester, TestInputPattern1) {
-  auto [ans, times, n, k] = GetParam();
-  EXPECT_EQ(ans, myTest::networkDelayTime(times, n, k));
+  auto [ans, pattern] = GetParam();
+  EXPECT_EQ(ans, myTest::regionsBySlashes(pattern));
 }
