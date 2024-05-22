@@ -40,6 +40,14 @@ INSTANTIATE_TEST_SUITE_P(TestInput1, LeetCodeTester,
                                                                         {2,3,1},
                                                                         {3,4,3},
                                                                         {4,2,2}
+                                                                        }),
+                                std::make_tuple(0, vector<vector<int>>{ {0,4,100},
+                                                                        {0,1,1},
+                                                                        {0,5,1000},
+                                                                        {1,2,2},
+                                                                        {2,3,3},
+                                                                        {3,4,4},
+                                                                        {2,5,7}
                                                                         })
                             )
                          );
@@ -47,8 +55,13 @@ INSTANTIATE_TEST_SUITE_P(TestInput1, LeetCodeTester,
 
 TEST_P( LeetCodeTester, TestInputPattern1) {
   auto [ans, pattern] = GetParam();
-  auto list = myTest::Bellman(pattern,5,0);
-  for(auto n : list){
-    printf("%d \r\n",n);
-  }
+//   auto list = myTest::Bellman(pattern,5,0);
+//   for(auto n : list){
+//     printf("%d \r\n",n);
+//   }
+    EXPECT_EQ(myTest::Bellman(pattern,5,0),myTest::Dijkstra(pattern,5,0));
+//   auto list2 = myTest::Dijkstra(pattern,5,0);
+//   for(auto n : list2){
+//     printf("%d \r\n",n);
+//   }
 }
