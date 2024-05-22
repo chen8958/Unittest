@@ -32,14 +32,22 @@ INSTANTIATE_TEST_SUITE_P(TestInput1, LeetCodeTester,
                             //         )
                             //     )
                             testing::Values(
-                                std::make_tuple(0, vector<vector<int>>{{1,3},{2,5},{3},{6},{},{6},{8},{},{},{5}})
+                                std::make_tuple(0, vector<vector<int>>{ {0,1,5},
+                                                                        {0,2,3},
+                                                                        {0,3,2},
+                                                                        {1,2,1},
+                                                                        {1,4,2},
+                                                                        {2,3,1},
+                                                                        {3,4,3},
+                                                                        {4,2,2}
+                                                                        })
                             )
                          );
 //vector<vector<int>>& times, int n, int k
 
 TEST_P( LeetCodeTester, TestInputPattern1) {
   auto [ans, pattern] = GetParam();
-  auto list = myTest::topological_sort(pattern);
+  auto list = myTest::Bellman(pattern,5,0);
   for(auto n : list){
     printf("%d \r\n",n);
   }
